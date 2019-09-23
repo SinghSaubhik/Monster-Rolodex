@@ -13,11 +13,24 @@ class App extends Component {
     };
   }
 
+  arr = []
  
   componentDidMount() {
     fetch("https://sjson.azurewebsites.net/api/4051k21xjyilni54")
       .then(res => res.json())
       .then(users => this.setState({ monsters: users }));
+  }
+
+  deleteMonster = (id)=>{
+    console.log(id);
+    const monsters = this.state.monsters.filter(m => {
+      return m.id !== id
+    })
+    
+    this.setState({
+      monsters: monsters
+    })
+    
   }
 
   handleChange = e => {
@@ -37,7 +50,7 @@ class App extends Component {
           placeholder={"search monster"}
           handleChange={this.handleChange}
         />
-        <CardList monsters={fielteredMonsters} />
+        <CardList monsters={fielteredMonsters} deleteMonster = {this.deleteMonster}/>
       </div>
     );
   }
